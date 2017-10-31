@@ -1,0 +1,12 @@
+html{
+	font-size: 14px;
+}
+
+body {
+    font:  "Open Sans", Helvetica, Arial, sans-serif;
+	padding: 3rem;  
+}
+
+a {
+    color: #00B7FF;
+}
