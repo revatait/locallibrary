@@ -10,8 +10,9 @@ how to start this app (run all as admin)
 
 https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/forms
 
---also finish all the delete gets/posts (for book, bookInstance, and genre)
-----I finished the genre, book, and author deletes.
+-- finish all the delete gets/posts (for book, bookInstance, and genre)
+---- I finished the genre, book, and author deletes.
+---- I wrote code for book instance deletes, but didn't work through errors.
 -- also finish all the update gets/posts (for bookInstance, author, and genre)
 -- Genre isn't escaped at bookController.js line 214
 -- take out comma at end of genre list?
