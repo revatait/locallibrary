@@ -158,7 +158,7 @@ exports.book_delete_get = function(req, res, next) {
         },
     }, function(err, results) {
         if (err) { return next(err);}
-        res.render('book_delete', { title: 'Book Delete', book: results.book, book_bookInstances: results.book_bookInstances} );
+        res.render('book_delete', { title: 'Delete Book', book: results.book, book_bookInstances: results.book_bookInstances} );
     });
 };
 
@@ -175,6 +175,7 @@ exports.book_delete_post = function(req, res, next) {
         },
     }, function(err, results){
         if (err) { return next(err);}
+        
         if (results.book_bookInstances.length > 0) {
             res.render('book_delete', { title: 'Delete Book', book: results.book, book_bookInstances: results.book_bookInstances});
             return;

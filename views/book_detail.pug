@@ -17,7 +17,7 @@ block content
     
     each val in book_instances
       hr
-      if val.status=='Owned'
+      if val.status=='Available'
         p.text-success #{val.status}
       else if val.status=='Maintenance'
         p.text-danger #{val.status}

@@ -84,7 +84,7 @@ exports.genre_delete_get = function(req, res, next) {
     },
   }, function(err, results) {
     if (err) { return next(err); }
-    res.render('genre_delete', { title: 'Genre Delete', genre: results.genre, genre_books: results.genre_books } );
+    res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_books: results.genre_books } );
   });
 };
 
@@ -92,6 +92,7 @@ exports.genre_delete_get = function(req, res, next) {
 // Handle Genre delete on POST
 exports.genre_delete_post = function(req, res, next) {
     req.checkBody('genreid', 'Genre id must exist.').notEmpty();
+
     async.parallel({
       genre: function(callback) {
         Genre.findById(req.body.genreid).exec(callback);
@@ -100,6 +101,8 @@ exports.genre_delete_post = function(req, res, next) {
         Book.find({ 'genre': req.body.genreid}, 'title summary').exec(callback);
       },
     }, function(err, results) {
+        if (err) { return next(err);}
+        
         if (results.genre_books.length > 0) {
           res.render('genre_delete', {title: 'Delete Genre', genre: results.genre, genre_books: results.genre_books});
           return;
