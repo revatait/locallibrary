@@ -58,7 +58,6 @@ exports.bookinstance_create_post = function(req, res, next) {
        });
 
     if (errors) {
-
         Book.find({},'title')
         .exec(function (err, books) {
           if (err) { return next(err); }
@@ -76,7 +75,6 @@ exports.bookinstance_create_post = function(req, res, next) {
                res.redirect(bookinstance.url);
             });
     }
-
 };
 
 // Display BookInstance delete form on GET
@@ -95,7 +93,7 @@ exports.bookinstance_delete_get = function(req, res, next) {
 exports.bookinstance_delete_post = function(req, res, next) {
     req.checkBody('bookinstanceid', 'Book imprint ID must exist.').notEmpty();
 
-    BookInstance.findByIdAndRemove(req.body.id, function deleteBookInstance(err) {
+    BookInstance.findByIdAndRemove(req.params.id, function deleteBookInstance(err) {
         if (err) { return next (err); }
 
         res.redirect('/catalog/bookinstances')
