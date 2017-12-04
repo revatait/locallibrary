@@ -30,7 +30,6 @@ exports.genre_detail = function(req, res, next) {
     //Successful, so render
     res.render('genre_detail', { title: 'Genre Detail', genre: results.genre, genre_books: results.genre_books } );
   });
-
 };
 
 // Display Genre create form on GET
@@ -87,7 +86,6 @@ exports.genre_delete_get = function(req, res, next) {
     res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_books: results.genre_books } );
   });
 };
-
 
 // Handle Genre delete on POST
 exports.genre_delete_post = function(req, res, next) {
