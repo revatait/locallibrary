@@ -93,6 +93,7 @@ exports.bookinstance_delete_get = function(req, res, next) {
 exports.bookinstance_delete_post = function(req, res, next) {
     req.checkBody('bookinstanceid', 'Book imprint ID must exist.').notEmpty();
 
+    // this works if its req.params.id, but not if it's req.body.id
     BookInstance.findByIdAndRemove(req.params.id, function deleteBookInstance(err) {
         if (err) { return next (err); }
 
