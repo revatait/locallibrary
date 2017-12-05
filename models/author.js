@@ -27,13 +27,13 @@ AuthorSchema
 AuthorSchema
 .virtual('birth_formatted')
 .get(function() {
-	return moment(this.date_of_birth).format('YYYY');
+	return moment(this.date_of_birth).format('MMMM D, YYYY');
 });
 
 AuthorSchema
 .virtual('death_formatted')
 .get(function() {
-	return moment(this.date_of_death).format('YYYY');
+	return moment(this.date_of_death).format('MMMM D, YYYY');
 });
 
 module.exports = mongoose.model('Author', AuthorSchema);

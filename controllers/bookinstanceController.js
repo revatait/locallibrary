@@ -20,7 +20,7 @@ exports.bookinstance_detail = function(req, res, next) {
         .exec(function(err, bookinstance) {
             if (err) { return next(err); }
             //Successful, so render
-            res.render('bookinstance_detail', { title: 'Book:', bookinstance: bookinstance });
+            res.render('bookinstance_detail', { title: 'Book Instance Detail', bookinstance: bookinstance });
         });
 };
 
@@ -126,6 +126,50 @@ exports.bookinstance_update_get = function(req, res, next) {
 };
 
 // Handle bookinstance update on POST
-exports.bookinstance_update_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: BookInstance update POST');
+exports.bookinstance_update_post = function(req, res, next) {
+
+    req.sanitize('id').escape();
+    req.sanitize('id').trim();    
+
+    req.checkBody('book', 'Book must be specified').notEmpty(); //We won't force Alphanumeric, because people might have spaces.
+    req.checkBody('imprint', 'Imprint must be specified').notEmpty();
+    req.checkBody('due_back', 'Invalid date').optional({ checkFalsy: true }).isISO8601();
+
+    req.sanitize('book').escape();
+    req.sanitize('imprint').escape();
+    req.sanitize('status').escape();
+    req.sanitize('book').trim();
+    req.sanitize('imprint').trim();
+    req.sanitize('status').trim();
+
+    //Run the validators because below code will modify the value of dates which will cause validation error
+    var errors = req.validationErrors();
+    req.sanitize('due_back').toDate();
+
+    var bookinstance = new BookInstance(
+      { book: req.body.book,
+        imprint: req.body.imprint,
+        status: req.body.status,
+        due_back: req.body.due_back,
+        _id: req.params.id
+       });
+
+    if (errors) {
+        Book.find({},'title')
+        .exec(function (err, books) {
+          if (err) { return next(err); }
+          //Successful, so render
+          res.render('bookinstance_form', { title: 'Update BookInstance', book_list : books, selected_book : bookinstance.book._id , errors: errors, bookinstance:bookinstance });
+        });
+        return;
+    }
+    else {
+    // Data from form is valid
+
+        BookInstance.findByIdAndUpdate(req.params.id, bookinstance, {}, function (err, thebookinstance) {
+            if (err) { return next(err); }
+               //successful - redirect to new author record.
+               res.redirect(bookinstance.url);
+            });
+    }
 };

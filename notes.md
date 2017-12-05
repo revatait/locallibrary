@@ -16,6 +16,8 @@ needs update: bookinstance, genre
 
 -- take out comma at end of genre list?
 -- add book list to author update?
+-- check on "present" as valid date
+-- how to make sure that a record isn't already in the system?
 
 
 
@@ -23,6 +25,7 @@ needs update: bookinstance, genre
 2. add read dates (multiple)
 3. add eras, geos, mediums, etc
 4. nest genres?
+5. published date vs first published date
 
 
 
