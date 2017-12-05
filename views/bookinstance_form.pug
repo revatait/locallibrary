@@ -6,33 +6,35 @@ block content
   form(method='POST' action='')
     div.form-group
       label(for='book') Book:
-      select#book.form-control(type='select' placeholder='Select book' name='book' required='true')
+      select#book.form-control(type='select', placeholder='Select book' name='book' required='true' )
         for book in book_list
-          if bookinstance
-            option(value=book._id selected=(bookinstance.book.toString()==book._id.toString() ? 'selected' : false)) #{book.title}
-          else
-            option(value=book._id) #{book.title}
+          option(value=book._id, selected=(selected_book==book._id.toString() ? 'selected' : false) ) #{book.title}
+
+          //- the tutorial had this, but github doesn't.
+          //- if bookinstance
+          //-   option(value=book._id selected=(bookinstance.book.toString()==book._id.toString() ? 'selected' : false)) #{book.title}
+          //- else
+          //-   option(value=book._id) #{book.title}
 
     div.form-group
       label(for='imprint') Imprint:
-      input#imprint.form-control(type='text' placeholder = 'Publisher and date information' name='imprint' required='true' value=(undefined===bookinstance ? '' : bookinstance.imprint))
+      input#imprint.form-control(type='text', placeholder='Publisher and date information' name='imprint' required='true' value=(undefined===bookinstance ? '' : bookinstance.imprint) )
     div.form-group
       label(for='due_back') Date when book available:
-      input#due_back.form-control(type='date' name='due_back' value=(undefined===bookinstance ? '' : bookinstance.due_back ))
-
+      input#due_back.form-control(type='date', name='due_back' value=(undefined===bookinstance ? '' : bookinstance.due_back_yyyy_mm_dd))
+            
     div.form-group
       label(for='status') Status:
-      select#status.form-control(type='select' placeholder='Select status' name='status' required='true')
-        option(value='Owned') Owned
-        option(value='Donated') Donated
-        option(value='Borrowed') Borrowed
-        option(value='Lent') Lent
-        option(value='Recommended') Recommended        
-
+      select#status.form-control(type='select', placeholder='Select status' name='status' required='true' )
+        option(value='Owned' selected=(undefined===bookinstance || bookinstance.status!='Owned' ? false:'selected')) Owned
+        option(value='Donated' selected=(undefined===bookinstance || bookinstance.status!='Donated' ? false:'selected')) Donated
+        option(value='Borrowed' selected=(undefined===bookinstance || bookinstance.status!='Borrowed' ? false:'selected')) Borrowed
+        option(value='Lent' selected=(undefined===bookinstance || bookinstance.status!='Lent' ? false:'selected')) Lent
+        option(value='Recommended' selected=(undefined===bookinstance ||bookinstance.status!='Recommended' ? false:'selected')) Recommended        
 
     button.btn.btn-primary(type='submit') Submit
 
-  if errors
+  if errors 
     ul
       for error in errors
         li!= error.msg

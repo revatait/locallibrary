@@ -1,5 +1,6 @@
 var BookInstance = require('../models/bookinstance');
 var Book = require('../models/book');
+var async = require('async');
 
 // Display list of all BookInstances
 exports.bookinstance_list = function(req, res, next) {
@@ -102,8 +103,26 @@ exports.bookinstance_delete_post = function(req, res, next) {
 };
 
 // Display BookInstance update form on GET
-exports.bookinstance_update_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: BookInstance update GET');
+exports.bookinstance_update_get = function(req, res, next) {
+
+    req.sanitize('id').escape();
+    req.sanitize('id').trim();
+
+    //Get book, authors and genres for form
+    async.parallel({
+        bookinstance: function(callback) {
+            BookInstance.findById(req.params.id).populate('book').exec(callback)
+        },
+        books: function(callback) {
+            Book.find(callback)
+        },
+
+        }, function(err, results) {
+            if (err) { return next(err); }
+
+            res.render('bookinstance_form', { title: 'Update  BookInstance', book_list : results.books, selected_book : results.bookinstance.book._id, bookinstance:results.bookinstance });
+        });
+
 };
 
 // Handle bookinstance update on POST

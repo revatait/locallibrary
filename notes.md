@@ -15,14 +15,14 @@ needs update: bookinstance, genre
 
 
 -- take out comma at end of genre list?
-
+-- add book list to author update?
 
 
 
 1. add users
 2. add read dates (multiple)
 3. add eras, geos, mediums, etc
-4. 
+4. nest genres?
 
 
 
