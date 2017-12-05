@@ -130,14 +130,20 @@ exports.author_delete_post = function(req, res, next) {
 // Display Author update form on GET
 exports.author_update_get = function(req, res, next) {
     
-    req.sanitize('first_name').escape();
-    req.sanitize('family_name').escape();
-    req.sanitize('first_name').trim();     
-    req.sanitize('family_name').trim();
+  req.sanitize('id').escape();
+  req.sanitize('id').trim();
 
-    
-
-
+  async.parallel({
+    author: function(callback) {     
+      Author.findById(req.params.id).exec(callback);
+    },
+    authors_books: function(callback) {
+      Book.find({ 'author': req.params.id },'title summary').exec(callback);
+    },
+  }, function (err, results) {
+        if (err) { return next (err); }
+    res.render('author_form', { title: 'Update Author', author: results.author, author_books: results.authors_books });  
+  });
 };
 
 // Handle Author update on POST

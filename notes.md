@@ -10,8 +10,8 @@ how to start this app (run all as admin)
 
 https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/forms
 
-updated:	  book,
-needs update: bookinstance, author, genre
+updated:	  book, author
+needs update: bookinstance, genre
 
 
 -- take out comma at end of genre list?
