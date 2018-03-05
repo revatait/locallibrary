@@ -7,8 +7,7 @@ var Schema = mongoose.Schema;
 var BookInstanceSchema = Schema({
 	book: {type: Schema.ObjectId, ref: 'Book', required: true},
 	imprint: {type: String, required: true},
-	status: {type: String, requied: true, enum: ['Owned', 'Donated', 'Borrowed', 'Lent', 'Recommended'], default: 'Owned'},
-	due_back: {type: Date, default: Date.now}
+	status: {type: String, required: true, enum: ['Owned', 'Donated', 'Borrowed', 'Lent', 'Recommended'], default: 'Owned'}
 });
 
 BookInstanceSchema
